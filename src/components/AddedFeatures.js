@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { connect } from 'react-redux';
 import AddedFeature from './AddedFeature';
 
 const AddedFeatures = props => {
@@ -8,8 +8,11 @@ const AddedFeatures = props => {
       <h6>Added features:</h6>
       {props.car.features.length ? (
         <ol type="1">
-          {props.car.features.map(item => (
-            <AddedFeature key={item.id} feature={item} />
+          {props.car.features.map( feature => (
+            <AddedFeature 
+               key={feature.id} 
+               feature={feature}
+            />
           ))}
         </ol>
       ) : (
@@ -19,4 +22,15 @@ const AddedFeatures = props => {
   );
 };
 
-export default AddedFeatures;
+const mapStateToProps = (state) => {
+   return {
+      car: {
+         features: state.car.features
+      }   
+   }
+}
+
+// DON'T NEED DISPATCH IN THIS COMPONENT 
+// IMPORTED DIRECTLY INTO CHILD OF THIS COMPONENT
+
+export default connect(mapStateToProps, {})(AddedFeatures);
